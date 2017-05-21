@@ -65,12 +65,12 @@ def main(arguments=None):
 
     # unpack remaining cl arguments using `exec` to setup the variable names
     # automatically
-    for arg, val in arguments.iteritems():
+    for arg, val in arguments.items():
         if arg[0] == "-":
             varname = arg.replace("-", "") + "Flag"
         else:
             varname = arg.replace("<", "").replace(">", "")
-        if isinstance(val, str) or isinstance(val, unicode):
+        if isinstance(val, str) or isinstance(val, str):
             exec(varname + " = '%s'" % (val,))
         else:
             exec(varname + " = %s" % (val,))
@@ -111,19 +111,19 @@ def main(arguments=None):
         )
         matchIndies, matches = cs.search()
         if not renderFlag:
-            print matches.table()
+            print(matches.table())
         elif renderFlag == "json":
-            print matches.json()
+            print(matches.json())
         elif renderFlag == "csv":
-            print matches.csv()
+            print(matches.csv())
         elif renderFlag == "yaml":
-            print matches.yaml()
+            print(matches.yaml())
         elif renderFlag == "md":
-            print matches.markdown()
+            print(matches.markdown())
         elif renderFlag == "table":
-            print matches.markdown()
+            print(matches.markdown())
         elif renderFlag == "mysql":
-            print matches.mysql(tableName=resultsTable)
+            print(matches.mysql(tableName=resultsTable))
 
     if level:
         from HMpTy import HTM
@@ -133,7 +133,7 @@ def main(arguments=None):
         )
 
         htmids = mesh.lookup_id(ra, dec)
-        print htmids[0]
+        print(htmids[0])
 
     if "dbConn" in locals() and dbConn:
         dbConn.commit()

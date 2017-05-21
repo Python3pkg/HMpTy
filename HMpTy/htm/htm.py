@@ -15,7 +15,7 @@ import os
 os.environ['TERM'] = 'vt100'
 from fundamentals import tools
 from astrocalc.coords import unit_conversion
-import _htmcCode
+from . import _htmcCode
 import numpy
 from sys import stdout
 

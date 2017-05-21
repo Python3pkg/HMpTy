@@ -77,7 +77,7 @@ def add_htm_ids_to_mysql_database_table(
         """Checking the table %(tableName)s exists in the database""" % locals())
     tableList = []
     for row in rows:
-        tableList.extend(row.values())
+        tableList.extend(list(row.values()))
     if tableName not in tableList:
         message = "The %s table does not exist in the database" % (tableName,)
         log.critical(message)
@@ -117,7 +117,7 @@ def add_htm_ids_to_mysql_database_table(
         }
 
     # CHECK IF COLUMNS EXISTS YET - IF NOT CREATE FROM
-    for key in htmCols.keys():
+    for key in list(htmCols.keys()):
         try:
             log.debug(
                 'attempting to check and generate the HTMId columns for the %s db table' %
@@ -137,7 +137,7 @@ def add_htm_ids_to_mysql_database_table(
             switch = 0
             if not colExists:
                 if switch == 0:
-                    print "Adding the HTMCircle columns to %(tableName)s" % locals()
+                    print("Adding the HTMCircle columns to %(tableName)s" % locals())
                     switch = 1
                 sqlQuery = 'ALTER TABLE ' + tableName + ' ADD ' + \
                     key + ' ' + htmCols[key] + ' DEFAULT NULL'
@@ -154,7 +154,7 @@ def add_htm_ids_to_mysql_database_table(
     log.debug(
         """Counting the number of rows still requiring HTMID information""" % locals())
     if reindex:
-        sqlQuery = u"""
+        sqlQuery = """
             SELECT INDEX_NAME FROM INFORMATION_SCHEMA.STATISTICS
                 WHERE table_schema=DATABASE() AND table_name='%(tableName)s' and COLUMN_NAME = "%(primaryIdColumnName)s";
         """ % locals()
@@ -317,18 +317,18 @@ def add_htm_ids_to_mysql_database_table(
                 'no HTMIds to add to the %s db table' % (tableName, ))
 
         percent = float(count) * 100. / float(totalCount)
-        print "%(count)s / %(totalCount)s htmIds added to %(tableName)s (%(percent)0.5f%% complete)" % locals()
+        print("%(count)s / %(totalCount)s htmIds added to %(tableName)s (%(percent)0.5f%% complete)" % locals())
         end = time.time()
         timediff = end - start
         timediff = timediff * 1000000. / float(batchSize)
-        print "Update speed: %(timediff)0.2fs/1e6 rows\n" % locals()
+        print("Update speed: %(timediff)0.2fs/1e6 rows\n" % locals())
 
     # APPLY INDEXES IF NEEDED
     sqlQuery = ""
     for index in ["htm10ID", "htm13ID", "htm16ID"]:
         log.debug('adding %(index)s index to %(tableName)s' % locals())
         iname = "idx_" + index
-        asqlQuery = u"""
+        asqlQuery = """
             SELECT COUNT(1) IndexIsThere FROM INFORMATION_SCHEMA.STATISTICS
                 WHERE table_schema=DATABASE() AND table_name='%(tableName)s' AND index_name='%(iname)s';
         """ % locals()
@@ -340,11 +340,11 @@ def add_htm_ids_to_mysql_database_table(
 
         if count == 0:
             if not len(sqlQuery):
-                sqlQuery += u"""
+                sqlQuery += """
                     ALTER TABLE %(tableName)s ADD INDEX `%(iname)s` (`%(index)s` ASC)
                 """ % locals()
             else:
-                sqlQuery += u""", ADD INDEX `%(iname)s` (`%(index)s` ASC)""" % locals()
+                sqlQuery += """, ADD INDEX `%(iname)s` (`%(index)s` ASC)""" % locals()
     if len(sqlQuery):
         writequery(
             log=log,
@@ -354,7 +354,7 @@ def add_htm_ids_to_mysql_database_table(
     log.debug('finished adding indexes to %(tableName)s' % locals())
 
     if reindex:
-        print "Re-enabling keys within the '%(tableName)s' table" % locals()
+        print("Re-enabling keys within the '%(tableName)s' table" % locals())
         sqlQuery = """ALTER TABLE `%(tableName)s` enable keys""" % locals()
         writequery(
             log=log,
@@ -362,7 +362,7 @@ def add_htm_ids_to_mysql_database_table(
             dbConn=dbConn
         )
 
-    print "All HTMIds added to %(tableName)s" % locals()
+    print("All HTMIds added to %(tableName)s" % locals())
 
     log.info('completed the ``add_htm_ids_to_mysql_database_table`` function')
     return None

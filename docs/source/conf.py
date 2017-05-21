@@ -57,8 +57,8 @@ master_doc = 'index'
 from datetime import datetime, date, time
 now = datetime.now()
 now = now.strftime("%Y")
-project = u'HMpTy'
-copyright = u'%(now)s, Dave Young' % locals()
+project = 'HMpTy'
+copyright = '%(now)s, Dave Young' % locals()
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -174,7 +174,7 @@ html_show_sourcelink = True
 # If true, "(C) Copyright ..." is shown in the HTML footer. Default is True.
 # html_show_copyright = True
 
-html_add_permalinks = u"  ∞"
+html_add_permalinks = "  ∞"
 
 # If true, an OpenSearch description file will be output, and all pages will
 # contain a <link> tag referring to it.  The value of this option must be the
@@ -204,8 +204,8 @@ latex_elements = {
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-    ('index', 'HMpTy.tex', u'HMpTy Documentation',
-     u'Dave Young', 'manual'),
+    ('index', 'HMpTy.tex', 'HMpTy Documentation',
+     'Dave Young', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -234,8 +234,8 @@ latex_logo = "_images/thespacedoctor_icon_dark.png"
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'HMpTy', u'HMpTy Documentation',
-     [u'Dave Young'], 1)
+    ('index', 'HMpTy', 'HMpTy Documentation',
+     ['Dave Young'], 1)
 ]
 
 # If true, show URL addresses after external links.
@@ -248,8 +248,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    ('index', 'HMpTy', u'HMpTy Documentation',
-     u'Dave Young', 'HMpTy', 'Tools for working with Hierarchical Triangular Meshes (HTMs). Generate HTM-ids, crossmatch sets of sky-coordinates and more',
+    ('index', 'HMpTy', 'HMpTy Documentation',
+     'Dave Young', 'HMpTy', 'Tools for working with Hierarchical Triangular Meshes (HTMs). Generate HTM-ids, crossmatch sets of sky-coordinates and more',
      'Miscellaneous'),
 ]
 
@@ -325,7 +325,7 @@ def generateAutosummaryIndex():
             writeFile = open(pathToWriteFile, 'w')
             writeFile.write("")
             writeFile.close()
-        except IOError, e:
+        except IOError as e:
             message = 'could not open the file %s' % (pathToWriteFile,)
             raise IOError(message)
 
@@ -371,7 +371,7 @@ def generateAutosummaryIndex():
     allClasses = ("\n   ").join(allClasses)
     allFunctions = ("\n   ").join(allFunctions)
 
-    thisText = u"""
+    thisText = """
 Subpackages
 -----------
 
@@ -421,7 +421,7 @@ Functions
     regex = re.compile(r'\n\s*.*?utKit\.utKit(\n|$)', re.I)
     allClasses = regex.sub("\n", allClasses)
 
-    classAndFunctions = u"""
+    classAndFunctions = """
 **Classes**
 
 .. autosummary::
@@ -447,7 +447,7 @@ Functions
     regex = re.compile(r'\n\s*.*?utKit\.utKit(\n|$)', re.I)
     allClasses = regex.sub("\n", allClasses)
 
-    classAndFunctions = u"""
+    classAndFunctions = """
 **Classes**
 
 .. autosummary::
@@ -491,6 +491,6 @@ def findAllSubpackges(
 autosummaryText = generateAutosummaryIndex()
 
 # Add substitutions here
-rst_epilog = u"""
+rst_epilog = """
 .. |tsd| replace:: thespacedoctor
 """ % locals()

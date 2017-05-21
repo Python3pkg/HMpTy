@@ -18,7 +18,7 @@ from fundamentals import tools
 from HMpTy.htm import HTM
 import numpy as np
 from fundamentals.mysql import readquery
-from StringIO import StringIO
+from io import StringIO
 
 
 class conesearch():
@@ -291,7 +291,7 @@ class conesearch():
             htmWhereClause = "where %(htmLevel)s between %(minID)s and %(maxID)s  " % locals(
             )
         else:
-            thesHtmIds = ",".join(np.array(map(str, trixelArray)))
+            thesHtmIds = ",".join(np.array(list(map(str, trixelArray))))
             htmWhereClause = "where %(htmLevel)s in (%(thesHtmIds)s)" % locals(
             )
 
@@ -375,7 +375,7 @@ class conesearch():
                     quiet=True
                 )
             else:
-                print sqlQuery
+                print(sqlQuery)
                 raise e
 
         if self.distinct and (self.columns != "*" and (self.raCol.lower() not in self.columns.lower() or self.decCol.lower() not in self.columns.lower())):
@@ -383,7 +383,7 @@ class conesearch():
             theseKeys = []
             for r in databaseRows:
                 constraintKey = ""
-                for k, v in r.iteritems():
+                for k, v in r.items():
                     if k.lower() != self.raCol.lower() and k.lower() != self.decCol.lower():
                         constraintKey += str(v)
                 if self.raCol.lower() in self.columns.lower():

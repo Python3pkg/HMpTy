@@ -16,7 +16,7 @@ if version_info >= (2, 6, 0):
             fp, pathname, description = imp.find_module(
                 '_htmc', [dirname(__file__)])
         except ImportError:
-            import _htmc
+            from . import _htmc
             return _htmc
         if fp is not None:
             try:
@@ -27,7 +27,7 @@ if version_info >= (2, 6, 0):
     _htmc = swig_import_helper()
     del swig_import_helper
 else:
-    import _htmc
+    from . import _htmc
 del version_info
 try:
     _swig_property = property

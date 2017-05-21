@@ -55,7 +55,7 @@ try:
     readFile = codecs.open(pathToReadFile, encoding='utf-8', mode='r')
     thisData = readFile.read().split("\n")
     readFile.close()
-except IOError, e:
+except IOError as e:
     message = 'could not open the file %s' % (pathToReadFile,)
     log.critical(message)
     raise IOError(message)
@@ -90,10 +90,10 @@ class test_sets(unittest.TestCase):
             radius=10 / (60. * 60.),
             sourceList=transientList
         )
-        print matches
-        print len(ra)
-        print len(dec)
-        print len(sourceList)
+        print(matches)
+        print(len(ra))
+        print(len(dec))
+        print(len(sourceList))
 
     def test_sets_all_extract_function(self):
 
@@ -107,7 +107,7 @@ class test_sets(unittest.TestCase):
         )
         allMatches = xmatcher._extract_all_sets_from_list()
         for i, m in enumerate(allMatches):
-            print i, m
+            print(i, m)
 
     def test_sets_match_function(self):
 
@@ -132,9 +132,9 @@ class test_sets(unittest.TestCase):
             )
             this.get()
             assert False
-        except Exception, e:
+        except Exception as e:
             assert True
-            print str(e)
+            print(str(e))
 
         # x-print-testpage-for-pessto-marshall-web-object
 
